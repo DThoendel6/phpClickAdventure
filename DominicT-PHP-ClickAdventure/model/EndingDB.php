@@ -1,20 +1,10 @@
+<!--
+-Author: Dominic Thoendel
+-->
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of EndingDB
- * @var $ending Ending
- * @author dt420622
- */
 class EndingDB {
-    //put your code here
      public static function getEnding($endingID){
-        $db = Database::getDB();
+      $db = Database::getDB();
  
       $query = 'SELECT * FROM endings '
               . 'WHERE endingID = :endingID';
@@ -25,7 +15,7 @@ class EndingDB {
       return $results;
     }
     public static function createEnding($currentEndingAchieved){
-        $db = Database::getDB();
+      $db = Database::getDB();
  
       $query = 'INSERT INTO ending(endingName,endingTime, playerEnd, endingID) '
               . 'VALUES(:endingTitle,CURRENT_TIMESTAMP,:playerEnd,:endingID)';
@@ -36,7 +26,7 @@ class EndingDB {
       $statement->execute();
     }
      public static function getPlayerEndings($playerID){
-        $db = Database::getDB();
+      $db = Database::getDB();
  
       $query = 'SELECT * FROM ending '
               . 'WHERE playerEnd = :playerID';
@@ -46,9 +36,8 @@ class EndingDB {
       $results =  $statement->fetchAll();
       return $results;
     }
-    
     public static function checkPlayerEndings($playerID, $endingID){
-        $db = Database::getDB();
+      $db = Database::getDB();
  
       $query = 'SELECT * FROM ending '
               . 'WHERE playerEnd = :playerID '

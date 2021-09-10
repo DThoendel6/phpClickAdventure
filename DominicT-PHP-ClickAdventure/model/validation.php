@@ -1,3 +1,7 @@
+<!--
+-Author: Dominic Thoendel
+-Concepts taken from my PHP class given by Fred Scott
+-->
 <?php
 
 class Validation {
@@ -44,7 +48,7 @@ class Validation {
     
     public static function checkPassword($arg) {
         $counter = 0;
-        $errorString = "<br>Your password must have at least 3 of the following: <br>";
+        $errorString = "\nYour password must have at least 3 of the following:<br>";
         if (preg_match('/[A-Z]/',$arg)===1) {
             $counter++;
             $errorString=$errorString."Included: You have at least 1 uppercase character <br>";

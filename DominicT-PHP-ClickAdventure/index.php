@@ -1,3 +1,6 @@
+<!--
+-Author: Dominic Thoendel
+-->
 <?php
 
 require_once('model/database.php');
@@ -11,7 +14,7 @@ require_once('model/PlayerDB.php');
 require_once('model/controllerSecurity.php');
 require_once('model/Ending.php');
 require_once('model/EndingDB.php');
-$lifetime = 60 * 60 * 24 * 14;
+$lifetime = 60 * 60 * 24 * 1;
 session_set_cookie_params($lifetime);
 session_start();
 
@@ -31,6 +34,8 @@ if ($action == NULL) {
 
 switch ($action) {
     case 'homePage':
+	//Brought here when first opening the game, or click
+	//back to Register from the login page
         $userName = filter_input(INPUT_POST, 'uName', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -42,6 +47,8 @@ switch ($action) {
         die();
         break;
     case 'startGame':
+	//Brought here when you click Register on the register page
+	//We cannot come here from the login due to the email address
         $userName = filter_input(INPUT_POST, 'uName', FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL, FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -92,6 +99,7 @@ switch ($action) {
         break;
 
     case 'nextArea':
+	//Brought here when you click any option within the game
         $nextLocation = filter_input(INPUT_POST, 'nextLocation');
         $area = AreaDB::getNextLocaiton($nextLocation);
 
@@ -127,22 +135,20 @@ switch ($action) {
                 }
             }
         }
-
-
         include('view/GamePage.php');
         die();
         break;
     case 'LogIn':
-        //$userName = filter_input(INPUT_POST, 'uName', FILTER_SANITIZE_SPECIAL_CHARS);
-        //$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+	//CLICKED "Or Login" on register page
+	//Sends player to Login page, blanks out inputs.
         $uName = "";
-        //$emailCheck = "";
         $pWord = "";
 
         include 'view/LoginPage.php';
         die();
         break;
     case 'loginPlayer':
+	//Brought here when you click Login on the Login page
         $userName = filter_input(INPUT_POST, 'loginUName', FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, 'loginPassword', FILTER_SANITIZE_SPECIAL_CHARS);
         $uName = Validation::isNotEmpty($userName, "User Name");
@@ -176,22 +182,22 @@ switch ($action) {
                     $errorMessage = "";
                     include('view/GamePage.php');
                 } else {
-                    $error = "Username or Password is not correct";
+                    //$error = "Username or Password is not correct";
                     $password = "";
                     $hashedPasswordList = [];
-                    include('view/homePage.php');
+                    include('view/LoginPage.php');
                 }
             } else {
-                $error = "Username Doesn't exist";
+                //$error = "Username Doesn't exist";
                 $password = "";
                 $hashedPasswordList = [];
-                include('view/homePage.php');
+                include('view/LoginPage.php');
             }
         } else {
-            $error = "Username or Password is not correct";
+            //$error = "Username or Password is not correct";
             $password = "";
             $hashedPasswordList = [];
-            include('view/homePage.php');
+            include('view/LoginPage.php');
         }
         die();
         break;
@@ -234,7 +240,6 @@ switch ($action) {
         die();
         break;
 }
-//1525 Program 3
 //The best way to get a project done faster is to start sooner. -Jim Highsmith
 //The first 90 percent of the code accounts for the first 90 percent of the development time.
 //The remaining 10 percent of the code accounts for the other 90 percent of the development time. -Tom Cargill

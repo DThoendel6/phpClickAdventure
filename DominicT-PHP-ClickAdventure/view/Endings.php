@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+-Author: Dominic Thoendel
 -->
 <html>
     <head>
         <meta charset="UTF-8">
+		<title>Click Adventure</title>
+		<link href="main.css" rel="stylesheet" type="text/css"/>
         <title></title>
     </head>
     <body>
-        Made it to the end screen! Have you found all 7 endings?
+        <h3>Made it to the end screen! Have you found all 7 endings?</h3>
         <table> 
             <tr>
                 <th>Ending Name</th>    
                 <th>Ending Time</th>  
             </tr>
-            <br>
+            
             <?php foreach ($endings as $ending) { ?>
                 <tr>
                     <td><?php controllerSecurity::xecho($ending->getEndingName()); ?></td>
                     <td><?php controllerSecurity::xecho($ending->getEndingTime()); ?></td>
                 </tr>
-                <br>
             <?php } ?>
         </table>
-
+		<br>
         <form action="./index.php" method="post">
             <input type="hidden" name="action" value="nextArea">
             <input type="hidden" name="nextLocation" value="1">
